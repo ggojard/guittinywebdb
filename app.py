@@ -16,7 +16,7 @@ class TinyWebDB(db.Model):
     tag = db.Column(db.String, primary_key=True, nullable=False)
     value = db.Column(db.String, nullable=False)
     # The 'date' column is needed for deleting older entries, so not really required
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
 db.create_all()
@@ -36,8 +36,12 @@ def store_a_value():
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
         if existing_tag:
-            existing_tag.value = value
-            db.session.commit()
+            if value = ""
+                db.session.delete(existing_tag);
+                db.session.commit()
+            else:
+                existing_tag.value = value
+                db.session.commit()
         else:
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
@@ -62,3 +66,4 @@ def delete_entry():
 
 if __name__ == '__main__':
     app.run()
+
