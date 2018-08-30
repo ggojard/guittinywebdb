@@ -37,7 +37,7 @@ def store_a_value():
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
         if existing_tag:
             # if 'value' has been set to an empty string then proceed to deletion
-            if value = ""
+            if value == "":
                 db.session.delete(existing_tag);
                 db.session.commit()
             else:
