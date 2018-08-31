@@ -35,13 +35,14 @@ def store_a_value():
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        if existing_tag:
+        
+        # If value is empty, then delete entry
+        if existing_tag and value == 'entrytodelete':
+            db.session.delete(existing_tag)
+            db.session.commit()             
+        elif existing_tag:
             existing_tag.value = value
-            db.session.commit()
-            # If value is empty, then delete entry
-        elif value == 'entrytodelete':
-                db.session.delete(existing_tag)
-                db.session.commit()            
+            db.session.commit()        
         else:
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
