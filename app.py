@@ -38,6 +38,9 @@ def store_a_value():
         if existing_tag:
             existing_tag.value = value
             db.session.commit()
+            if existing_tag.value == '':
+                db.session.remove(existing_tag)
+                db.session.commit()            
         else:
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
@@ -57,9 +60,12 @@ def get_value():
 
 @app.route('/deleteentry')
 def delete_entry():
-    db.session.remove(where('value') == '')
-    db.session.commit()
-    return 'Empty entries have been deleted!'
+#     docs = db.search(User.name == 'John')
+#     for doc in docs:
+#     db.session.remove(where('value') == '')
+#     db.session.commit()
+#     return 'Empty entries have been deleted!'
+    return 'Not yet implemented!'
 
 
 if __name__ == '__main__':
