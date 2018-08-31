@@ -25,7 +25,7 @@ db.session.commit()
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Hello, I\'m UP and RUNNING !'
 
 
 @app.route('/storeavalue', methods=['POST'])
@@ -43,6 +43,7 @@ def store_a_value():
             else:
                 existing_tag.value = value
                 db.session.commit()
+            return jsonify(['STORED', tag, value])
         else:
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
