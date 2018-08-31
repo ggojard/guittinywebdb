@@ -39,7 +39,7 @@ def store_a_value():
             existing_tag.value = value
             db.session.commit()
             # If value is empty, then delete entry
-            if existing_tag.value == '':
+        elif value == 'entrytodelete':
                 db.session.delete(existing_tag)
                 db.session.commit()            
         else:
