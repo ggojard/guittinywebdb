@@ -57,7 +57,7 @@ def get_value():
 
 @app.route('/deleteentry')
 def delete_entry():
-    db.remove(where('value') == '')
+    db.session.remove(where('value') == '')
     db.session.commit()
     return 'Empty entries have been deleted!'
 
