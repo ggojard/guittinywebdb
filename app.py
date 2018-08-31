@@ -16,7 +16,7 @@ class TinyWebDB(db.Model):
     tag = db.Column(db.String, primary_key=True, nullable=False)
     value = db.Column(db.String, nullable=False)
     # The 'date' column is needed for deleting older entries, so not really required
-    # date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
 db.create_all()
@@ -38,7 +38,7 @@ def store_a_value():
         
         # If value is empty, then delete entry
         if existing_tag and value == 'entrytodelete':
-            db.session.delete(existing_tag)
+            db.session.remove(existing_tag)
             db.session.commit()             
         elif existing_tag:
             existing_tag.value = value
