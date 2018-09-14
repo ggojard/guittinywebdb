@@ -65,11 +65,12 @@ def get_averages():
     nb_play = 0
     sum_play = 0    
     if tag:
-        value = TinyWebDB.query.filter_by(tag=tag).first().value        
-        for v in range(int(value)):
-            sum_play = sum_play + v
-            nb_play = nb_play + 1 
-        return jsonify(['VALUE', 'average', sum_play/nb_play])
+        value = TinyWebDB.query.filter_by(tag=tag).first().value
+        return jsonify(['VALUE', 'average', value])
+#        for v in range(int(value)):
+#            sum_play = sum_play + v
+#            nb_play = nb_play + 1 
+#        return jsonify(['VALUE', 'average', sum_play/nb_play])
     return 'Invalid Tag!'
 
 @app.route('/deleteentry')
