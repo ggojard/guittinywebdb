@@ -63,10 +63,15 @@ def get_value():
 def get_averages(user):    
     tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
     nb_play = 0
-    sum_play = 0    
+    sum_play = 0
+    average = 0.00
     if tag:
         value = TinyWebDB.query.filter_by(tag=tag).first().value
-        return jsonify(['VALUE', 'average', value])
+        nb_play = len(value)
+        for v in value:
+            sum_play += v
+        nb_play = len(value)
+        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', value])
 #        for v in range(int(value)):
 #            sum_play = sum_play + v
 #            nb_play = nb_play + 1 
