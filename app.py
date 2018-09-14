@@ -59,10 +59,9 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
-@app.route('/getaverages/tag/<tag>') #, methods=['POST'])
-def get_averages(tag):
-    
-    #tag = 'appinventor_user_actionable_scores_nyu' #request.form['tag']
+@app.route('/getaverages/user/<user>') #, methods=['POST'])
+def get_averages(user):    
+    tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
     nb_play = 0
     sum_play = 0    
     if tag:
@@ -72,7 +71,7 @@ def get_averages(tag):
 #            sum_play = sum_play + v
 #            nb_play = nb_play + 1 
 #        return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
-    return 'Invalid Tag!'
+    return 'Invalid user: '+user
 
 @app.route('/deleteentry')
 def delete_entry():
