@@ -68,13 +68,10 @@ def get_averages(user):
     if tag:
         value = TinyWebDB.query.filter_by(tag=tag).first().value
         nb_play = len(value)
-        for v in value:
-            sum_play += v
+        #for v in value:
+        #    sum_play += v
         nb_play = len(value)
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', value])
-#        for v in range(int(value)):
-#            sum_play = sum_play + v
-#            nb_play = nb_play + 1 
 #        return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
