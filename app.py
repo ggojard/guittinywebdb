@@ -59,6 +59,18 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
+@app.route('/getaverages', methods=['POST'])
+def get_averages():
+    tag = request.form['tag']
+    nb_play = 0
+    sum_play = 0    
+    if tag:
+        value = TinyWebDB.query.filter_by(tag=tag).first().value        
+        for v in range(int(value)):
+            sum_play = sum_play + v
+            nb_play = nb_play + 1 
+        return jsonify(['VALUE', 'average', sum_play/nb_play])
+    return 'Invalid Tag!'
 
 @app.route('/deleteentry')
 def delete_entry():
