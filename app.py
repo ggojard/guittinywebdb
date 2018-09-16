@@ -35,14 +35,14 @@ def store_a_value():
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        
+
         # If value is empty, then delete entry
         if existing_tag and value == 'entrytodelete':
             db.session.remove(existing_tag)
-            db.session.commit()             
+            db.session.commit()
         elif existing_tag:
             existing_tag.value = value
-            db.session.commit()        
+            db.session.commit()
         else:
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
@@ -60,7 +60,7 @@ def get_value():
     return 'Invalid Tag!'
 
 @app.route('/getaverages/user/<user>') #, methods=['POST'])
-def get_averages(user):    
+def get_averages(user):
     tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
     nb_play = 0
     sum_play = 0
@@ -74,7 +74,7 @@ def get_averages(user):
         nb_play = len(value)
         average = format(sum_play/nb_play, '.2f')
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average, 'scores', value])
-#        return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
+        # return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
 @app.route('/deleteentry')
