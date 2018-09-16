@@ -74,7 +74,7 @@ def get_averages(user):
         nb_play = len(value)
         average = format(sum_play/nb_play, '.2f')
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average, 'scores', value])
-        # return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
+        ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
 @app.route('/deleteentry')
