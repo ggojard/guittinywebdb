@@ -88,7 +88,7 @@ def get_averages():
         nb_play = 0
         sum_play = 0
         average = 0.00
-        value = TinyWebDB.query.filter_by(tag=tag).first().value #.replace("[", "").replace("]", "").split(',');
+        value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
         if value:
             # board += '<br>' + value      
             nb_play = len(value)
