@@ -59,7 +59,7 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
-@app.route('/getscores/user/<user>', methods=['POST'])
+@app.route('/getscores/actionable/user/<user>', methods=['GET', 'POST'])
 def get_scores(user):
     tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
     nb_play = 0
@@ -77,23 +77,29 @@ def get_scores(user):
         ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
-@app.route('/getaverages/user/<user>') #, methods=['POST'])
-def get_averages(user):
-    tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
-    nb_play = 0
-    sum_play = 0
-    average = 0.00
-    if tag:
+@app.route('/getscores/actionable/users') #, methods=['POST'])
+def get_averages():
+    tag_users = 'appinventor_users' #'appinventor_user_actionable_scores_ranking'
+    users = TinyWebDB.query.filter_by(tag=tag_users).first().value.replace("[", "").replace("]", "").split(',');
+    board = ''
+    for user in users:
+        #board += user + '<\br>'
+        tag = 'appinventor_user_actionable_scores_'+user       
+        nb_play = 0
+        sum_play = 0
+        average = 0.00
         # To Do :  remove first [ et last ]
         value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
-        nb_play = len(value)
-        for v in value:
-            sum_play = sum_play + int(v)
-        nb_play = len(value)
-        average = format(sum_play/nb_play, '.2f')
-        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average]) #, 'scores', value])
-        ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
-    return 'Invalid user: '+user
+        if value:
+            nb_play = len(value)
+            for v in value:
+                sum_play = sum_play + int(v)
+            nb_play = len(value)
+            average = format(sum_play/nb_play, '.2f')
+            board += user + ': ' + ['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average]) + '<\br>'
+
+    return board
+
 
 @app.route('/deleteentry')
 def delete_entry():
