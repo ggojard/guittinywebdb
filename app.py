@@ -88,7 +88,7 @@ def get_actionable_users():
     return board
 
 
-@app.route('/getscores/actionable/users/ranking') #, methods=['GET', 'POST'])
+@app.route('/getscores/actionable/ranking') #, methods=['GET', 'POST'])
 def get_actionable_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
@@ -107,10 +107,10 @@ def get_actionable_ranking():
             nb_play = len(value)
             average = format(sum_play/nb_play, '.2f')
             #board.append(   ['user', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-            board += '<br> user: ' + user + ' average: ' + average + ' nb_play: ' + nb_play + ' sum_play: ' + sum_play
-            #return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
+            #board += '<br> user: ' + user + ' average: ' + average + ' nb_play: ' + nb_play + ' sum_play: ' + sum_play
+            return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
 
-    return board
+    #return board
 
 @app.route('/deleteentry')
 def delete_entry():
