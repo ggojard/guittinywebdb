@@ -59,6 +59,7 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
+
 @app.route('/getscores/actionable/user/<user>', methods=['GET', 'POST'])
 def get_scores(user):
     tag = 'appinventor_user_actionable_scores_' + user #request.form['tag']
@@ -73,22 +74,10 @@ def get_scores(user):
         nb_play = len(value)
         average = format(sum_play/nb_play, '.2f')
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
-        ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
-@app.route('/getscores/actionable/users') #, methods=['GET', 'POST'])
-def get_actionable_users():
-    board = ''
-    tag = 'appinventor_user_actionable_scores_ranking'
-    users = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
-    if users:
-        for user in users:
-            tag = 'appinventor_user_actionable_scores_' + user
-            board += '<br>' + tag
-    return board
 
-
-@app.route('/getscores/actionable/ranking') #, methods=['GET', 'POST'])
+@app.route('/getscores/actionable/ranking', methods=['GET', 'POST'])
 def get_actionable_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
@@ -96,7 +85,6 @@ def get_actionable_ranking():
     if users:
         for user in users:
             tag = 'appinventor_user_actionable_scores_' + user
-            #board += '<br>' + tag
             nb_play = 0
             sum_play = 0
             average = 0.00
@@ -106,11 +94,9 @@ def get_actionable_ranking():
                 sum_play = sum_play + int(v)
             nb_play = len(value)
             average = format(sum_play/nb_play, '.2f')
-            #board.append(   ['user', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-            #board += '<br> user: ' + user + ' average: ' + average + ' nb_play: ' + nb_play + ' sum_play: ' + sum_play
-            #return jsonify(['VALUE', 'u', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-            board.append(['u', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+            board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
     return jsonify(board)
+
 
 @app.route('/deleteentry')
 def delete_entry():
