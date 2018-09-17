@@ -79,7 +79,7 @@ def get_scores(user):
 @app.route('/getscores/actionable/users') #, methods=['POST'])
 def get_averages():
     tag_users = 'appinventor_users' #'appinventor_user_actionable_scores_ranking'
-    users = TinyWebDB.query.filter_by(tag=tag_users).first().value.replace("[", "").replace("]", "").replace(""", "").split(',');
+    users = TinyWebDB.query.filter_by(tag=tag_users).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
     board = ''
    
     for user in users:
