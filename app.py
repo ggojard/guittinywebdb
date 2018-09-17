@@ -85,6 +85,12 @@ def get_averages():
         for user in users:
             tag = 'appinventor_user_actionable_scores_' + user
             board += '<br>' + tag
+            nb_play = 0
+            sum_play = 0
+            average = 0.00
+            value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
+            if value:
+                board += '<br>  --  ' + value
 
     return board
 
