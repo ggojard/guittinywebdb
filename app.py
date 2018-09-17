@@ -94,8 +94,8 @@ def get_averages():
             for v in value:
                 sum_play = sum_play + int(v)            
             average = format(sum_play/nb_play, '.2f')
-            board += jsonify(['VALUE', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-    return board
+            board += 'user: ' + user + ' nb: ' + nb_play + ' sum: ' + sum_play + ' average: ' + average
+    return jsonify(board)
 
 
 @app.route('/deleteentry')
