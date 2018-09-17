@@ -59,6 +59,24 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
+@app.route('/getaverages/user/<user>', methods=['POST'])
+def get_averages(user):
+    tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
+    nb_play = 0
+    sum_play = 0
+    average = 0.00
+    if tag:
+        # To Do :  remove first [ et last ]
+        value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
+        nb_play = len(value)
+        for v in value:
+            sum_play = sum_play + int(v)
+        nb_play = len(value)
+        average = format(sum_play/nb_play, '.2f')
+        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
+        ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
+    return 'Invalid user: '+user
+
 @app.route('/getaverages/user/<user>') #, methods=['POST'])
 def get_averages(user):
     tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
@@ -73,7 +91,7 @@ def get_averages(user):
             sum_play = sum_play + int(v)
         nb_play = len(value)
         average = format(sum_play/nb_play, '.2f')
-        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average, 'scores', value])
+        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average]) #, 'scores', value])
         ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
