@@ -61,7 +61,7 @@ def get_value():
 
 @app.route('/getscores/actionable/user/<user>', methods=['GET', 'POST'])
 def get_scores(user):
-    tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
+    tag = 'appinventor_user_actionable_scores_' + user #request.form['tag']
     nb_play = 0
     sum_play = 0
     average = 0.00
@@ -83,8 +83,7 @@ def get_averages():
     board = ''
    
     for user in users:
-        board += '\n' + user
-        tag = 'appinventor_user_actionable_scores_'+user       
+        tag = 'appinventor_user_actionable_scores_' + user       
         board += '\n' + tag
         nb_play = 0
         sum_play = 0
