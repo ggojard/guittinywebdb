@@ -91,7 +91,7 @@ def get_averages():
         average = 0.00
         #value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
         #if value:
-            nb_play = len(value)
+         #   nb_play = len(value)
          #   for v in value:
          #       sum_play = sum_play + int(v)
          #   nb_play = len(value)
