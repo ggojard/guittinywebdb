@@ -110,7 +110,7 @@ def get_actionable_ranking():
             #board += '<br> user: ' + user + ' average: ' + average + ' nb_play: ' + nb_play + ' sum_play: ' + sum_play
             #return jsonify(['VALUE', 'u', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
             board.append(['u', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-    return board
+    return jsonify(board)
 
 @app.route('/deleteentry')
 def delete_entry():
