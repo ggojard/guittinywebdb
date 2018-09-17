@@ -76,6 +76,27 @@ def get_scores(user):
         ## return jsonify(['VALUE', 'average', math.ceil(sum_play/nb_play)])
     return 'Invalid user: '+user
 
+@app.route('/getscores/actionable/users', methods=['GET', 'POST'])
+def get_averages():
+    board = ''
+    tag_users = 'appinventor_user_actionable_scores_ranking'
+    users = TinyWebDB.query.filter_by(tag=tag_users).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
+   
+    for user in users:
+        tag = 'appinventor_user_actionable_scores_' + user
+        nb_play = 0
+        sum_play = 0
+        average = 0.00
+        value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
+        if value:
+            # board += '<br>' + value      
+            nb_play = len(value)
+            for v in value:
+                sum_play = sum_play + int(v)            
+            average = format(sum_play/nb_play, '.2f')
+            board += jsonify(['VALUE', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+    return board
+
 
 @app.route('/deleteentry')
 def delete_entry():
