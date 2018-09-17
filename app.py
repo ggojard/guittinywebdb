@@ -90,7 +90,7 @@ def get_actionable_users():
 
 @app.route('/getscores/actionable/users/ranking') #, methods=['GET', 'POST'])
 def get_actionable_ranking():
-    board = ''
+    #board = ''
     tag = 'appinventor_user_actionable_scores_ranking'
     users = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
     if users:
@@ -106,7 +106,8 @@ def get_actionable_ranking():
                 sum_play = sum_play + int(v)
             nb_play = len(value)
             average = format(sum_play/nb_play, '.2f')
-            board += '<br> average: ' + average
+            board += jsonify(['user', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+            #board += '<br> average: ' + average
             #return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
 
     return board
