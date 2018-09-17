@@ -59,8 +59,8 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
-@app.route('/getaverages/user/<user>', methods=['POST'])
-def get_averages(user):
+@app.route('/getscores/user/<user>', methods=['POST'])
+def get_scores(user):
     tag = 'appinventor_user_actionable_scores_'+user #request.form['tag']
     nb_play = 0
     sum_play = 0
