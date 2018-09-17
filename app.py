@@ -108,9 +108,9 @@ def get_actionable_ranking():
             average = format(sum_play/nb_play, '.2f')
             #board.append(   ['user', user, 'nb', nb_play, 'sum', sum_play, 'average', average])
             #board += '<br> user: ' + user + ' average: ' + average + ' nb_play: ' + nb_play + ' sum_play: ' + sum_play
-            return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
+            obj = obj.appen(jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average]))
 
-    #return board
+    return obj
 
 @app.route('/deleteentry')
 def delete_entry():
