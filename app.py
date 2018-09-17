@@ -69,7 +69,7 @@ def get_scores(user):
         value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
         nb_play = len(value)
         for v in value:
-            sum_play = sum_play + v
+            sum_play = sum_play + int(v)
         nb_play = len(value)
         average = format(sum_play/nb_play, '.2f')
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
@@ -89,12 +89,12 @@ def get_averages():
         average = 0.00
         value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
         if value:
-            # board += '<br>' + value
-            nb_play = len(value)
-            for v in value:
-                sum_play = sum_play + v
-            average = format(sum_play/nb_play, '.2f')
-            board += 'user: ' + user + ' nb: ' + nb_play + ' sum: ' + sum_play + ' average: ' + average
+            board += '<br>' + value
+            #nb_play = len(value)
+            #for v in value:
+            #    sum_play = sum_play + int(v)
+            #average = format(sum_play/nb_play, '.2f')
+            #board += 'user: ' + user + ' nb: ' + nb_play + ' sum: ' + sum_play + ' average: ' + average
     return jsonify(board)
 
 
