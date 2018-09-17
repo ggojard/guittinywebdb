@@ -102,7 +102,7 @@ def get_actionable_ranking():
             average = 0.00
             value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
             if value:
-                board += '<br>  --  ' + value
+                board += '<br>  --  ' + value.join(",")
 
     return board
 
