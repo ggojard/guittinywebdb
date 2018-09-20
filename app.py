@@ -104,7 +104,7 @@ def get_user_average():
     return 'Invalid user: '+user
 
 
-@app.route('/actionable/getranking') #, methods=['GET', 'POST']) #NOK
+@app.route('/actionable/getranking') #, methods=['GET', 'POST']) #OK if users  list is good
 def get_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
@@ -140,11 +140,10 @@ def store_a_score(user, score):
         score_list = existing_tag.value.replace("[", "").replace("]", "").split(',')
         existing_tag.value = score_list.append(score)
         db.session.commit()
-#    else:
-#        data = TinyWebDB(tag=tag, value=score)
-#        db.session.add(data)
-#        db.session.commit()
-        
+        #    else:
+        #        data = TinyWebDB(tag=tag, value=score)
+        #        db.session.add(data)
+        #        db.session.commit()        
     return jsonify(['STORED', tag, score])
 
 
