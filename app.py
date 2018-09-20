@@ -25,7 +25,7 @@ db.session.commit()
 
 @app.route('/')
 def hello_world():
-    return 'Hello, I\'m UP and RUNNING !'
+    return 'Hello, I\'m UP!'
 
 
 @app.route('/storeavalue', methods=['POST'])
@@ -60,7 +60,26 @@ def get_value():
     return 'Invalid Tag!'
 
 
-@app.route('/getscores/actionable/user/<user>', methods=['GET', 'POST'])
+@app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST'])
+def store_a_score(user, score):
+    #tag = 'appinventor_user_actionable_scores_' + request.form['user']
+    tag = 'appinventor_user_actionable_scores_' + user
+    #score = request.form['score']
+    
+    if tag:
+        # Prevent Duplicate Key error by updating the existing tag
+        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
+        score_list = existing_tag.value
+        existing_tag.value = score_list.append(score)
+        db.session.commit()
+    else:
+        data = TinyWebDB(tag=tag, value=value)
+        db.session.add(data)
+        db.session.commit()
+        
+    return jsonify(['STORED', tag, value])
+
+@app.route('/actionable/user/<user>')
 def get_scores(user):
     tag = 'appinventor_user_actionable_scores_' + user #request.form['tag']
     nb_play = 0
@@ -76,9 +95,25 @@ def get_scores(user):
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
     return 'Invalid user: '+user
 
+@app.route('/actionable/getuseraverage', methods=['POST'])
+def get_user_average():
+    tag = 'appinventor_user_actionable_scores_' + request.form['tag']
+    nb_play = 0
+    sum_play = 0
+    average = 0.00
+    if tag:
+        value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
+        nb_play = len(value)
+        for v in value:
+            sum_play = sum_play + int(v)
+        nb_play = len(value)
+        average = format(sum_play/nb_play, '.2f')
+        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
+    return 'Invalid user: '+user
 
-@app.route('/getscores/actionable/ranking', methods=['GET', 'POST'])
-def get_actionable_ranking():
+
+@app.route('/actionable/getranking', methods=['GET', 'POST'])
+def get_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
     users = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
@@ -95,7 +130,8 @@ def get_actionable_ranking():
             nb_play = len(value)
             average = format(sum_play/nb_play, '.2f')
             board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
-    return jsonify(board)
+        return jsonify(board)
+    return 'Invalid users list'
 
 
 @app.route('/deleteentry')
