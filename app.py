@@ -59,25 +59,17 @@ def get_value():
         return jsonify(['VALUE', tag, value])
     return 'Invalid Tag!'
 
+@app.route('/deleteentry')
+def delete_entry():
+#     docs = db.search(User.name == 'John')
+#     for doc in docs:
+#     db.session.remove(where('value') == '')
+#     db.session.commit()
+#     return 'Empty entries have been deleted!'
+    return 'Not yet implemented!'
 
-@app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST']) #NOK
-def store_a_score(user, score):
-    #tag = 'appinventor_user_actionable_scores_' + request.form['user']
-    tag = 'appinventor_user_actionable_scores_' + user
-    #score = request.form['score']
-    
-    if tag:
-        # Prevent Duplicate Key error by updating the existing tag
-        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        score_list = existing_tag.value
-        existing_tag.value = score_list.append(score)
-        db.session.commit()
-    else:
-        data = TinyWebDB(tag=tag, value=score)
-        db.session.add(data)
-        db.session.commit()
-        
-    return jsonify(['STORED', tag, score])
+
+
 
 @app.route('/actionable/user/<user>') # OK
 def get_scores(user):
@@ -133,18 +125,31 @@ def get_ranking():
                 nb_play = len(value)
                 average = format(sum_play/nb_play, '.2f')
                 board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+            else:
+                return value
+    else:
+        return users
     return jsonify(board)
-    #return 'Invalid users list'
 
+@app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST']) #NOK
+def store_a_score(user, score):
+    #tag = 'appinventor_user_actionable_scores_' + request.form['user']
+    tag = 'appinventor_user_actionable_scores_' + user
+    #score = request.form['score']
+    
+    if tag:
+        # Prevent Duplicate Key error by updating the existing tag
+        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
+        score_list = existing_tag.value
+        existing_tag.value = score_list.append(score)
+        db.session.commit()
+    else:
+        data = TinyWebDB(tag=tag, value=score)
+        db.session.add(data)
+        db.session.commit()
+        
+    return jsonify(['STORED', tag, score])
 
-@app.route('/deleteentry')
-def delete_entry():
-#     docs = db.search(User.name == 'John')
-#     for doc in docs:
-#     db.session.remove(where('value') == '')
-#     db.session.commit()
-#     return 'Empty entries have been deleted!'
-    return 'Not yet implemented!'
 
 
 if __name__ == '__main__':
