@@ -60,7 +60,7 @@ def get_value():
     return 'Invalid Tag!'
 
 
-@app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST'])
+@app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST']) #NOK
 def store_a_score(user, score):
     #tag = 'appinventor_user_actionable_scores_' + request.form['user']
     tag = 'appinventor_user_actionable_scores_' + user
@@ -73,13 +73,13 @@ def store_a_score(user, score):
         existing_tag.value = score_list.append(score)
         db.session.commit()
     else:
-        data = TinyWebDB(tag=tag, value=value)
+        data = TinyWebDB(tag=tag, value=score)
         db.session.add(data)
         db.session.commit()
         
-    return jsonify(['STORED', tag, value])
+    return jsonify(['STORED', tag, score])
 
-@app.route('/actionable/user/<user>')
+@app.route('/actionable/user/<user>') # OK
 def get_scores(user):
     tag = 'appinventor_user_actionable_scores_' + user #request.form['tag']
     nb_play = 0
@@ -95,7 +95,7 @@ def get_scores(user):
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
     return 'Invalid user: '+user
 
-@app.route('/actionable/getuseraverage', methods=['POST'])
+@app.route('/actionable/getuseraverage', methods=['GET', 'POST'])
 def get_user_average():
     tag = 'appinventor_user_actionable_scores_' + request.form['tag']
     nb_play = 0
@@ -112,7 +112,7 @@ def get_user_average():
     return 'Invalid user: '+user
 
 
-@app.route('/actionable/getranking', methods=['GET', 'POST'])
+@app.route('/actionable/getranking', methods=['GET', 'POST']) #NOK
 def get_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
