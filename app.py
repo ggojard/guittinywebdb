@@ -112,7 +112,7 @@ def get_user_average():
     return 'Invalid user: '+user
 
 
-@app.route('/actionable/getranking', methods=['GET', 'POST']) #NOK
+@app.route('/actionable/getranking') #, methods=['GET', 'POST']) #NOK
 def get_ranking():
     board = []
     tag = 'appinventor_user_actionable_scores_ranking'
