@@ -115,7 +115,12 @@ def get_user_average():
 @app.route('/actionable/getranking') #, methods=['GET', 'POST']) #NOK
 def get_ranking():
     board = [1,2,3]
-
+    tag = 'appinventor_user_actionable_scores_ranking'
+    users = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").replace('"', '').split(',');
+    if users:
+        for user in users:
+            tag = 'appinventor_user_actionable_scores_' + user
+            board.append([tag])
     return jsonify(board)
     #return 'Invalid users list'
 
