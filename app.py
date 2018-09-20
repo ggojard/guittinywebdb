@@ -118,13 +118,7 @@ def get_ranking():
             average = 0.00
             value = TinyWebDB.query.filter_by(tag=tag).first().value;          
             if value:
-                value = value.replace("[", "").replace("]", "").split(',')
-                nb_play = len(value)
-                for v in value:
-                    sum_play = sum_play + int(v)
-                nb_play = len(value)
-                average = format(sum_play/nb_play, '.2f')
-                board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+                board.append(value)
     return jsonify(board)
 
 @app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST']) #NOK
@@ -136,13 +130,13 @@ def store_a_score(user, score):
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        score_list = existing_tag.value
+        score_list = existing_tag.value.replace("[", "").replace("]", "").split(',')
         existing_tag.value = score_list.append(score)
         db.session.commit()
-    else:
-        data = TinyWebDB(tag=tag, value=score)
-        db.session.add(data)
-        db.session.commit()
+#    else:
+#        data = TinyWebDB(tag=tag, value=score)
+#        db.session.add(data)
+#        db.session.commit()
         
     return jsonify(['STORED', tag, score])
 
