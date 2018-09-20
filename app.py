@@ -28,7 +28,7 @@ def hello_world():
     return 'Hello, I\'m UP!'
 
 
-@app.route('/storeavalue', methods=['POST'])
+@app.route('/storeavalue', methods=['POST']) #OK
 def store_a_value():
     tag = request.form['tag']
     value = request.form['value']
@@ -51,7 +51,7 @@ def store_a_value():
     return 'Invalid Tag!'
 
 
-@app.route('/getvalue', methods=['POST'])
+@app.route('/getvalue', methods=['POST']) #OK
 def get_value():
     tag = request.form['tag']
     if tag:
@@ -95,7 +95,7 @@ def get_scores(user):
         return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
     return 'Invalid user: '+user
 
-@app.route('/actionable/getuseraverage', methods=['GET', 'POST'])
+@app.route('/actionable/getuseraverage', methods=['POST']) #OK
 def get_user_average():
     tag = 'appinventor_user_actionable_scores_' + request.form['tag']
     nb_play = 0
