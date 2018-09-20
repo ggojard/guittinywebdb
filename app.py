@@ -117,9 +117,14 @@ def get_ranking():
             sum_play = 0
             average = 0.00
             value = TinyWebDB.query.filter_by(tag=tag).first().value;          
-
-    else:
-        return users
+            if value:
+                value = value.replace("[", "").replace("]", "").split(',')
+                nb_play = len(value)
+                for v in value:
+                    sum_play = sum_play + int(v)
+                nb_play = len(value)
+                average = format(sum_play/nb_play, '.2f')
+                board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
     return jsonify(board)
 
 @app.route('/actionable/storeascore/<user>/<score>', methods=['GET', 'POST']) #NOK
