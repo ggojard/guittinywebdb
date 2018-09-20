@@ -137,14 +137,15 @@ def store_a_score():
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        score_list = existing_tag.value.replace("[", "").replace("]", "").split(',')
-        existing_tag.value = score_list.append(score)
         return existing_tag.value
+        #score_list = existing_tag.value.replace("[", "").replace("]", "").split(',')
+        #existing_tag.value = score_list.append(score)
+        
         #db.session.commit()
         #    else:
         #        data = TinyWebDB(tag=tag, value=score)
         #        db.session.add(data)
-        #        db.session.commit()        
+        #        db.session.commit()
     return jsonify(['STORED', tag, score])
 
 
