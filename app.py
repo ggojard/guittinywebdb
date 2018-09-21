@@ -150,11 +150,12 @@ def store_a_score():
             my_type = jsonify(['list'])
         elif isinstance(scores, str):
             my_type = jsonify(['str'])
+            scores.replace("[", "").replace("]", "")
         elif isinstance(scores, dict):
             my_type = jsonify(['dict'])
         else:
             my_type = jsonify(['??'])
-        return my_type
+        return scores
         #scores_list = scores.split(',')
         #return jsonify([user, my_type, scores])
        
