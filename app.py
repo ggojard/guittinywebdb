@@ -146,8 +146,18 @@ def store_a_score():
         #return existing_tag.value
         
         scores = existing_tag.value
-        scores_list = scores.split(',')
-        return scores_list.append(0)
+        if isinstance(scores, list):            
+            my_type = jsonify(['list'])
+        elif isinstance(scores, str):
+            my_type = jsonify(['str'])
+        elif isinstance(scores, dict):
+            my_type = jsonify(['dict'])
+        else:
+            my_type = jsonify(['??'])
+
+
+        #scores_list = scores.split(',')
+        return jsonify([user, my_type, scores])
     
         
         #score_list = set(existing_tag.value)       
