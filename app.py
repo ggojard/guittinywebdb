@@ -26,7 +26,7 @@ db.session.commit()
 @app.route('/')
 def hello_world():
     tag = 'appinventor_user_actionable_scores_ranking'
-    return 'Hello, I\'m UP!' + f_get_value(tag)
+    return 'Hello, I\'m UP!'
 
 @app.route('/storeavalue', methods=['POST']) #OK
 def store_a_value():
@@ -35,12 +35,8 @@ def store_a_value():
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-
-        # If value is empty, then delete entry
-        if existing_tag and value == 'entrytodelete':
-            db.session.remove(existing_tag)
-            db.session.commit()
-        elif existing_tag:
+        
+        if existing_tag:
             existing_tag.value = value
             db.session.commit()
         else:
@@ -128,9 +124,10 @@ def get_ranking():
                 #board.append(value)
     return jsonify(board)
 
-@app.route('/actionable/storeascore', methods=['POST']) #NOK
+@app.route('/actionable/storeascore', methods=['POST']) #OK
 def store_a_score():
-    tag = 'appinventor_user_actionable_scores_' + request.form['user']
+    user = request.form['user']
+    tag = 'appinventor_user_actionable_scores_' + user
     score = int(request.form['score'])    
     if tag:
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
@@ -142,8 +139,7 @@ def store_a_score():
             store_a_value2(tag, my_list)
         else:
             my_type = '??'
-    return jsonify(['STORED', tag, score, my_list])
-
+    return jsonify(['STORED', user, score])
 
 def store_a_value2(tag, value):
     if tag:
