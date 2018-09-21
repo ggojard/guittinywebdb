@@ -138,38 +138,16 @@ def get_ranking():
 @app.route('/actionable/storeascore', methods=['POST']) #NOK
 def store_a_score():
     tag = 'appinventor_user_actionable_scores_' + request.form['user']
-    score = int(request.form['score'])
-    
+    score = int(request.form['score'])    
     if tag:
-        # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        #return existing_tag.value
         scores = existing_tag.value
-        
-        if isinstance(scores, list):            
-            my_type = jsonify(['list'])
-        elif isinstance(scores, str):
-            my_type = jsonify(['str'])
+        if isinstance(scores, str):
+            my_type = 'string'
             scores.replace("[", "").replace("]", "")
-        elif isinstance(scores, dict):
-            my_type = jsonify(['dict'])
         else:
-            my_type = jsonify(['??'])
-        
-        #scores_list = scores.split(',')
-        #return jsonify([user, my_type, scores])
-       
-        #score_list = set(existing_tag.value)       
-        #my_list = list(score_list)
-        #.replace("[", "").replace("]", "").split(',')
-        #return my_list.append(score)        
-
-        #db.session.commit()
-        #    else:
-        #        data = TinyWebDB(tag=tag, value=score)
-        #        db.session.add(data)
-        #        db.session.commit()
-    return jsonify(['STORED', my_type, tag, scores])
+            my_type = '??'
+    return jsonify(['STORED', tag, my_type, scores])
 
 
 if __name__ == '__main__':
