@@ -139,17 +139,23 @@ def store_a_score():
             my_type = 'string'
             #my_list = scores.replace("[", "").replace("]", "").split(",")
             my_list = list(scores)
-            my_list = remove_values_from_list(my_list, ']')
-            my_list = remove_values_from_list(my_list, '[')
-            my_list = remove_values_from_list(my_list, ',')           
+            while ']' in my_list:
+                my_list.remove(']')
+
+            while '[' in my_list:
+                my_list.remove('[')
+
+            while ',' in my_list:
+                my_list.remove(',')
+                
+            #my_list = remove_values_from_list(my_list, ']')
+            #my_list = remove_values_from_list(my_list, '[')
+            #my_list = remove_values_from_list(my_list, ',')           
         else:
             my_type = '??'
     return my_list #scores #jsonify(['STORED', tag, my_type, scores])
 
-def remove_values_from_list(the_list, val):
-    while val in the_list:
-        the_list.remove(val)
-    return the_list
+
 
 
 if __name__ == '__main__':
