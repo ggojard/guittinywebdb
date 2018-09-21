@@ -137,26 +137,10 @@ def store_a_score():
         scores = existing_tag.value
         if isinstance(scores, str):
             my_type = 'string'
-            #my_list = scores.replace("[", "").replace("]", "").split(",")
-            my_list = list(scores)
-            while ']' in my_list:
-                my_list.remove(']')
-
-            while '[' in my_list:
-                my_list.remove('[')
-
-            while ',' in my_list:
-                my_list.remove(',')
-                
-            #my_list = remove_values_from_list(my_list, ']')
-            #my_list = remove_values_from_list(my_list, '[')
-            #my_list = remove_values_from_list(my_list, ',')           
+            my_list = scores[0:len(scores)-1]+','+score+']'       
         else:
             my_type = '??'
     return my_list #scores #jsonify(['STORED', tag, my_type, scores])
-
-
-
 
 if __name__ == '__main__':
     app.run()
