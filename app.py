@@ -155,7 +155,7 @@ def store_a_score():
             my_type = jsonify(['dict'])
         else:
             my_type = jsonify(['??'])
-        return scores
+        
         #scores_list = scores.split(',')
         #return jsonify([user, my_type, scores])
        
@@ -169,7 +169,7 @@ def store_a_score():
         #        data = TinyWebDB(tag=tag, value=score)
         #        db.session.add(data)
         #        db.session.commit()
-    return jsonify(['STORED', tag, score])
+    return jsonify(['STORED', my_type, tag, scores])
 
 
 if __name__ == '__main__':
