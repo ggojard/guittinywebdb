@@ -137,7 +137,7 @@ def store_a_score():
         scores = existing_tag.value
         if isinstance(scores, str):
             my_type = 'string'
-            return scores.replace("[", "").replace("]", "") #.split(",")
+            return scores.replace("[", "").replace("]", "").split(",").append(0)
         else:
             my_type = '??'
     return scores #jsonify(['STORED', tag, my_type, scores])
