@@ -135,10 +135,9 @@ def get_ranking():
                 #board.append(value)
     return jsonify(board)
 
-@app.route('/actionable/storeascore', methods=['GET', 'POST']) #NOK
+@app.route('/actionable/storeascore', methods=['POST']) #NOK
 def store_a_score():
     tag = 'appinventor_user_actionable_scores_' + request.form['user']
-    #tag = 'appinventor_user_actionable_scores_' + user
     score = int(request.form['score'])
     
     if tag:
@@ -147,8 +146,8 @@ def store_a_score():
         #return existing_tag.value
         
         scores = existing_tag.value
-        scores_list = scores.split()
-        return scores_list
+        scores_list = scores.split(',')
+        return scores_list.append(0)
     
         
         #score_list = set(existing_tag.value)       
