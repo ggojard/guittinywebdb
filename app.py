@@ -25,7 +25,8 @@ db.session.commit()
 
 @app.route('/')
 def hello_world():
-    return 'Hello, I\'m UP!'
+    tag = 'appinventor_user_actionable_scores_ranking'
+    return 'Hello, I\'m UP!' + f_get_value(tag)
 
 
 @app.route('/storeavalue', methods=['POST']) #OK
@@ -54,6 +55,12 @@ def store_a_value():
 @app.route('/getvalue', methods=['POST']) #OK
 def get_value():
     tag = request.form['tag']
+    if tag:
+        value = TinyWebDB.query.filter_by(tag=tag).first().value
+        return jsonify(['VALUE', tag, value])
+    return 'Invalid Tag!'
+
+def f_get_value(tag):
     if tag:
         value = TinyWebDB.query.filter_by(tag=tag).first().value
         return jsonify(['VALUE', tag, value])
