@@ -148,16 +148,8 @@ def store_a_score():
         
         score_list = existing_tag.value
         #.replace("[", "").replace("]", "").split(',')
-        #return score_list
-        if isinstance(score_list, list):
-            existing_tag.value = score_list.append(score)
-            return existing_tag.value
-        elif isinstance(x, str):
-            return jsonify(['str'])
-        elif isinstance(x, dict):
-            return jsonify(['dict'])
-        else:
-            return jsonify(['??'])
+        return score_list
+
         #db.session.commit()
         #    else:
         #        data = TinyWebDB(tag=tag, value=score)
