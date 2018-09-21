@@ -139,9 +139,30 @@ def store_a_score():
             my_type = 'string'
             my_list = scores[0:len(scores)-1]
             my_list += ',' + str(score) + ']'
+            store_a_value2(tag, my_list)
         else:
             my_type = '??'
-    return my_list #scores #jsonify(['STORED', tag, my_type, scores])
+    return jsonify(['STORED', tag, score, my_list])
+
+
+def store_a_value2(tag, value):
+    if tag:
+        # Prevent Duplicate Key error by updating the existing tag
+        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
+
+        # If value is empty, then delete entry
+        if existing_tag and value == 'entrytodelete':
+            db.session.remove(existing_tag)
+            db.session.commit()
+        elif existing_tag:
+            existing_tag.value = value
+            db.session.commit()
+        else:
+            data = TinyWebDB(tag=tag, value=value)
+            db.session.add(data)
+            db.session.commit()
+        return jsonify(['STORED', tag, value])
+    return 'Invalid Tag!'
 
 if __name__ == '__main__':
     app.run()
