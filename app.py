@@ -139,7 +139,7 @@ def get_ranking():
 def store_a_score():
     tag = 'appinventor_user_actionable_scores_' + request.form['user']
     #tag = 'appinventor_user_actionable_scores_' + user
-    score = request.form['score']
+    score = int(request.form['score'])
     
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
@@ -148,7 +148,8 @@ def store_a_score():
         
         score_list = existing_tag.value
         #.replace("[", "").replace("]", "").split(',')
-        return score_list
+        return score_list.append(score)
+        
 
         #db.session.commit()
         #    else:
