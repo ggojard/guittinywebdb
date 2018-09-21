@@ -140,7 +140,7 @@ def store_a_score():
             return scores.replace("[", "").replace("]", "").split(",").append(0)
         else:
             my_type = '??'
-    return scores #jsonify(['STORED', tag, my_type, scores])
+    return print(scores) #jsonify(['STORED', tag, my_type, scores])
 
 
 if __name__ == '__main__':
