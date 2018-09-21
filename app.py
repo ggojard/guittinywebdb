@@ -146,16 +146,10 @@ def store_a_score():
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
         #return existing_tag.value
         
-        score_list = existing_tag.value
-        
-        if isinstance(score_list, list):            
-            return jsonify(['list'])
-        elif isinstance(score_list, str):
-            return jsonify(['str'])
-        elif isinstance(score_list, dict):
-            return jsonify(['dict'])
-        else:
-            return jsonify(['??'])
+        scores = existing_tag.value
+        scores_list = scores.split()
+        return scores_list
+    
         
         #score_list = set(existing_tag.value)       
         #my_list = list(score_list)
@@ -168,7 +162,6 @@ def store_a_score():
         #        db.session.add(data)
         #        db.session.commit()
     return jsonify(['STORED', tag, score])
-
 
 
 if __name__ == '__main__':
