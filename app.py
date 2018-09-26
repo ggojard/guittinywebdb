@@ -24,8 +24,6 @@ db.session.commit()
 
 ## COMMUN functions ##########################
 def store_a_value(tag, value):
-    tag = request.form['tag']
-    value = request.form['value']
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
