@@ -45,9 +45,9 @@ def add_item_to_tag_value(tag, item):
         if isinstance(current_value, str):
             new_value = current_value[0:len(current_value)-1]
             new_value += ',' + str(item) + ']'
-            store_a_value(existing_tag, new_value)
+            return store_a_value(existing_tag, new_value)
         else:
-            store_a_value(existing_tag, item)
+            return store_a_value(existing_tag, item)
     return 'Invalid Tag!'
 
 ## WEB APP ##########################
@@ -61,7 +61,7 @@ def hello_world():
 def store_a_value_POST():
     tag = request.form['tag']
     value = request.form['value']
-    store_a_value(tag, value)
+    return store_a_value(tag, value)
     
    
 @app.route('/getvalue', methods=['POST']) #OK
@@ -147,7 +147,7 @@ def store_a_score():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_' + user
     score = int(request.form['score'])
-    add_item_to_tag_value(tag, score)
+    return add_item_to_tag_value(tag, score)
     
 
 
