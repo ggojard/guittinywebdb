@@ -39,18 +39,23 @@ def store_a_value(tag, value):
     return 'Invalid Tag!'
 
 def add_item_to_tag_value(tag, item):
-    existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-    if existing_tag:
-        current_value = existing_tag.value
-        if isinstance(current_value, str):
-            new_value = current_value[0:len(current_value)-1]
-            new_value += ',' + str(item) + ']'
-            return store_a_value(existing_tag, new_value)
+    if tag:
+        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
+        new_value = ''
+        current_value = ''
+        if existing_tag:
+            current_value = existing_tag.value
+            if isinstance(current_value, str):
+                new_value = current_value[0:len(current_value)-1]
+                new_value += ',' + str(item) + ']'
+                return store_a_value(existing_tag, new_value)
+            else:
+                return 'Invalid value format!'
         else:
-            return 'Invalid value format!'
-    else:
-        return store_a_value(existing_tag, item)
-
+            return store_a_value(existing_tag, item)
+    return 'Invalid Tag!'
+    
+    
 ## WEB APP ##########################
 
 @app.route('/')
@@ -150,7 +155,7 @@ def store_a_score():
     score = int(request.form['score'])
     return add_item_to_tag_value(tag, score)
     
-@app.route('/actionable/createuser', methods=['POST']) #OK
+@app.route('/actionable/create/user', methods=['POST']) #OK
 def actionable_create_user():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_ranking'
