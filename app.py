@@ -33,7 +33,7 @@ def store_a_value(tag, value):
             existing_tag.value = value
             db.session.commit()
         else:
-            return 'NEW ' + tag + ', ' + value
+            #return 'NEW ' + tag + ', ' + value
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
             db.session.commit()
