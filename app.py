@@ -29,7 +29,13 @@ def hello_world():
     return 'Hello, I\'m UP!'
 
 @app.route('/storeavalue', methods=['POST']) #OK
-def store_a_value():
+def store_a_value_POST():
+    tag = request.form['tag']
+    value = request.form['value']
+    store_a_value(tag, value)
+   
+
+def store_a_value(tag, value):
     tag = request.form['tag']
     value = request.form['value']
     if tag:
@@ -45,7 +51,6 @@ def store_a_value():
             db.session.commit()
         return jsonify(['STORED', tag, value])
     return 'Invalid Tag!'
-
 
 @app.route('/getvalue', methods=['POST']) #OK
 def get_value():
@@ -129,36 +134,23 @@ def get_ranking():
 def store_a_score():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_' + user
-    score = int(request.form['score'])    
-    if tag:
-        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        scores = existing_tag.value
-        if isinstance(scores, str):
-            my_type = 'string'
-            my_list = scores[0:len(scores)-1]
-            my_list += ',' + str(score) + ']'
-            store_a_value2(tag, my_list)
-        else:
-            my_type = '??'
-    return jsonify(['STORED', user, score])
+    score = int(request.form['score'])
+    add_item_to_tag_value(tag, score)
+    
 
-def store_a_value2(tag, value):
+def add_item_to_tag_value(tag, item):
     if tag:
         # Prevent Duplicate Key error by updating the existing tag
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
 
-        # If value is empty, then delete entry
-        if existing_tag and value == 'entrytodelete':
-            db.session.remove(existing_tag)
-            db.session.commit()
-        elif existing_tag:
-            existing_tag.value = value
-            db.session.commit()
-        else:
-            data = TinyWebDB(tag=tag, value=value)
-            db.session.add(data)
-            db.session.commit()
-        return jsonify(['STORED', tag, value])
+        if existing_tag:
+            current_value = existing_tag.value
+            if isinstance(current_value, str):
+                new_value = current_value[0:len(current_value)-1]
+                new_value += ',' + str(item) + ']'
+                store_a_value(existing_tag, new_value)
+         else:
+            store_a_value(existing_tag, item)
     return 'Invalid Tag!'
 
 if __name__ == '__main__':
