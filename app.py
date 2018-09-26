@@ -46,6 +46,8 @@ def add_item_to_tag_value(tag, item):
             new_value = current_value[0:len(current_value)-1]
             new_value += ',' + str(item) + ']'
             return store_a_value(existing_tag, new_value)
+        else:
+            return 'Invalid value format!'
     else:
         return store_a_value(existing_tag, item)
 
@@ -152,9 +154,9 @@ def store_a_score():
 def actionable_create_user():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_ranking'
-    add_item_to_tag_value(tag, user)
+    return add_item_to_tag_value(tag, user)
     tag = 'appinventor_user_actionable_scores_' + user
-    store_a_value(tag, '')
+    #return store_a_value(tag, '')
 
     
     
