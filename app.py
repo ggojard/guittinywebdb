@@ -41,18 +41,15 @@ def store_a_value(tag, value):
     return 'Invalid Tag!'
 
 def add_item_to_tag_value(tag, item):
-    if tag:
-        # Prevent Duplicate Key error by updating the existing tag
-        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-
-        if existing_tag:
-            current_value = existing_tag.value
-            if isinstance(current_value, str):
-                new_value = current_value[0:len(current_value)-1]
-                new_value += ',' + str(item) + ']'
-                #store_a_value(existing_tag, new_value)
-         else:
-            #store_a_value(existing_tag, item)
+    existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
+    if existing_tag:
+        current_value = existing_tag.value
+        if isinstance(current_value, str):
+            new_value = current_value[0:len(current_value)-1]
+            new_value += ',' + str(item) + ']'
+            store_a_value(existing_tag, new_value)
+        else:
+            store_a_value(existing_tag, item)
     return 'Invalid Tag!'
 
 ## WEB APP ##########################
