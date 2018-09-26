@@ -29,11 +29,11 @@ def store_a_value(tag, value):
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
         
         if existing_tag:
-            return 'NEW ' + tag + ', ' + value
+            #return 'EXISTING ' + tag + ', ' + value
             existing_tag.value = value
             db.session.commit()
         else:
-            return 'EXISTING ' + tag + ', ' + value
+            return 'NEW ' + tag + ', ' + value
             data = TinyWebDB(tag=tag, value=value)
             db.session.add(data)
             db.session.commit()
@@ -41,11 +41,8 @@ def store_a_value(tag, value):
     return 'Invalid Tag!'
 
 def add_item_to_tag_value(tag, item):
-    if tag:
-        
+    if tag:        
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
-        new_value = ''
-        current_value = ''
         if existing_tag:
             current_value = existing_tag.value
             if isinstance(current_value, str):
