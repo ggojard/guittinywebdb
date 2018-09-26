@@ -49,7 +49,7 @@ def add_item_to_tag_value(tag, item):
             if isinstance(current_value, str):
                 new_value = current_value[0:len(current_value)-1]
                 new_value += ',' + str(item) + ']'
-                return tag + ', ' + item + ', ' + current_value + ', ' + new_value 
+                #return tag + ', ' + item + ', ' + current_value + ', ' + new_value 
                 store_a_value(existing_tag, new_value)
             else:
                 return 'Invalid value format!'
