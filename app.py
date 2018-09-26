@@ -46,9 +46,8 @@ def add_item_to_tag_value(tag, item):
             new_value = current_value[0:len(current_value)-1]
             new_value += ',' + str(item) + ']'
             return store_a_value(existing_tag, new_value)
-        else:
-            return store_a_value(existing_tag, item)
-    return 'Invalid Tag!'
+    else:
+        return store_a_value(existing_tag, item)
 
 ## WEB APP ##########################
 
