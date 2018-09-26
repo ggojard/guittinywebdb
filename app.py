@@ -40,11 +40,13 @@ def store_a_value(tag, value):
 
 def add_item_to_tag_value(tag, item):
     if tag:
+        
         existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
         new_value = ''
         current_value = ''
         if existing_tag:
             current_value = existing_tag.value
+            return tag + ' ' + item + ' ' + current_value
             if isinstance(current_value, str):
                 new_value = current_value[0:len(current_value)-1]
                 new_value += ',' + str(item) + ']'
@@ -159,8 +161,7 @@ def store_a_score():
 def actionable_create_user():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_ranking'
-    return user
-    #return add_item_to_tag_value(tag, user)
+    return add_item_to_tag_value(tag, user)
     tag = 'appinventor_user_actionable_scores_' + user
     #return store_a_value(tag, '')
 
