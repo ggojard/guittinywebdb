@@ -64,7 +64,7 @@ def store_a_value_POST():
     tag = request.form['tag']
     value = request.form['value']
     store_a_value(tag, value)
-    return true
+    
    
 @app.route('/getvalue', methods=['POST']) #OK
 def get_value():
