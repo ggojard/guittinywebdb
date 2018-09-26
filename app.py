@@ -33,8 +33,8 @@ def store_a_value_POST():
     tag = request.form['tag']
     value = request.form['value']
     store_a_value(tag, value)
+    return true
    
-
 def store_a_value(tag, value):
     tag = request.form['tag']
     value = request.form['value']
@@ -148,9 +148,9 @@ def add_item_to_tag_value(tag, item):
             if isinstance(current_value, str):
                 new_value = current_value[0:len(current_value)-1]
                 new_value += ',' + str(item) + ']'
-                store_a_value(existing_tag, new_value)
+                #store_a_value(existing_tag, new_value)
          else:
-            store_a_value(existing_tag, item)
+            #store_a_value(existing_tag, item)
     return 'Invalid Tag!'
 
 if __name__ == '__main__':
