@@ -23,18 +23,6 @@ db.create_all()
 db.session.commit()
 
 
-@app.route('/')
-def hello_world():
-    tag = 'appinventor_user_actionable_scores_ranking'
-    return 'Hello, I\'m UP!'
-
-@app.route('/storeavalue', methods=['POST']) #OK
-def store_a_value_POST():
-    tag = request.form['tag']
-    value = request.form['value']
-    store_a_value(tag, value)
-    return true
-   
 def store_a_value(tag, value):
     tag = request.form['tag']
     value = request.form['value']
@@ -52,6 +40,20 @@ def store_a_value(tag, value):
         return jsonify(['STORED', tag, value])
     return 'Invalid Tag!'
 
+
+
+@app.route('/')
+def hello_world():
+    tag = 'appinventor_user_actionable_scores_ranking'
+    return 'Hello, I\'m UP!'
+
+@app.route('/storeavalue', methods=['POST']) #OK
+def store_a_value_POST():
+    tag = request.form['tag']
+    value = request.form['value']
+    store_a_value(tag, value)
+    return true
+   
 @app.route('/getvalue', methods=['POST']) #OK
 def get_value():
     tag = request.form['tag']
@@ -138,20 +140,7 @@ def store_a_score():
     add_item_to_tag_value(tag, score)
     
 
-def add_item_to_tag_value(tag, item):
-    if tag:
-        # Prevent Duplicate Key error by updating the existing tag
-        existing_tag = TinyWebDB.query.filter_by(tag=tag).first()
 
-        if existing_tag:
-            current_value = existing_tag.value
-            if isinstance(current_value, str):
-                new_value = current_value[0:len(current_value)-1]
-                new_value += ',' + str(item) + ']'
-                #store_a_value(existing_tag, new_value)
-         else:
-            #store_a_value(existing_tag, item)
-    return 'Invalid Tag!'
 
 if __name__ == '__main__':
     app.run()
