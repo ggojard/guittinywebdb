@@ -49,11 +49,11 @@ def add_item_to_tag_value(tag, item):
                 new_value = current_value[0:len(current_value)-1]
                 new_value += ',' + str(item) + ']'
                 #return tag + ', ' + item + ', ' + current_value + ', ' + new_value 
-                return store_a_value(existing_tag, new_value)
+                existing_tag.value = new_value
+                db.session.commit()
+                return jsonify(['ADDED', tag, new_value])
             else:
                 return 'Invalid value format!'
-        else:
-            return store_a_value(existing_tag, item)
     return 'Invalid Tag!'
     
     
