@@ -159,10 +159,10 @@ def store_a_score():
 @app.route('/actionable/create/user', methods=['POST']) #OK
 def actionable_create_user():
     user = request.form['user']
+    tag = 'appinventor_user_actionable_scores_' + user
+    store_a_value(tag, '')
     tag = 'appinventor_user_actionable_scores_ranking'
     return add_item_to_tag_value(tag, '"'+user+'"')
-    tag = 'appinventor_user_actionable_scores_' + user
-    #return store_a_value(tag, '')
 
     
     
