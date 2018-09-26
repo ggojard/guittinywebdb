@@ -138,15 +138,14 @@ def get_ranking():
             sum_play = 0
             average = 0.00
             value = TinyWebDB.query.filter_by(tag=tag).first().value;          
-            if value:
+            if value.find(',')>-1:
                 value = value.replace("[", "").replace("]", "").split(',')
                 nb_play = len(value)
-                if nb_play > 0:
-                    for v in value:
-                        sum_play = sum_play + int(v)
-                    nb_play = len(value)
-                    average = format(sum_play/nb_play, '.2f')
-                    board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
+                for v in value:
+                    sum_play = sum_play + int(v)
+                nb_play = len(value)
+                average = format(sum_play/nb_play, '.2f')
+                board.append([user, 'nb', nb_play, 'sum', sum_play, 'average', average])
                 #board.append(value)
     return jsonify(board)
 
