@@ -154,8 +154,8 @@ def store_a_score():
     user = request.form['user']
     score = int(request.form['score'])
     tag = 'appinventor_user_actionable_scores_' + user
-    user_scores = TinyWebDB.query.filter_by(tag=tag).first().value;
-    if user_scores:    
+    existing_tag = TinyWebDB.query.filter_by(tag=tag).first();
+    if existing_tag:    
         return add_item_to_tag_value(tag, score)
     else:
         return store_a_value(tag, '[' + str(score) + ']')
@@ -163,7 +163,7 @@ def store_a_score():
 @app.route('/actionable/create/user', methods=['POST']) #OK
 def actionable_create_user():
     user = request.form['user']
-    tag = 'appinventor_user_actionable_scores_' + user
+    #tag = 'appinventor_user_actionable_scores_' + user
     #empty_scores = '[]'
     #store_a_value(tag, empty_scores)
     tag = 'appinventor_user_actionable_scores_ranking'
