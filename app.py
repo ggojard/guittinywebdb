@@ -152,16 +152,20 @@ def get_ranking():
 @app.route('/actionable/storeascore', methods=['POST']) #OK
 def store_a_score():
     user = request.form['user']
-    tag = 'appinventor_user_actionable_scores_' + user
     score = int(request.form['score'])
-    return add_item_to_tag_value(tag, score)
+    tag = 'appinventor_user_actionable_scores_' + user
+    user_scores = TinyWebDB.query.filter_by(tag=tag).first().value;
+    if user_scores:    
+        return add_item_to_tag_value(tag, score)
+    else:
+        return store_a_value(tag, '[' + str(score) + ']')
     
 @app.route('/actionable/create/user', methods=['POST']) #OK
 def actionable_create_user():
     user = request.form['user']
     tag = 'appinventor_user_actionable_scores_' + user
-    empty_scores = '[]'
-    store_a_value(tag, empty_scores)
+    #empty_scores = '[]'
+    #store_a_value(tag, empty_scores)
     tag = 'appinventor_user_actionable_scores_ranking'
     return add_item_to_tag_value(tag, '"'+user+'"')
 
