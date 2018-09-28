@@ -139,7 +139,7 @@ def get_ranking():
             average = 0.00
             existing_tag = TinyWebDB.query.filter_by(tag=tag).first();          
             if existing_tag:
-                value = exiting_tag.value
+                value = existing_tag.value
                 if value.find(',')>-1:
                     value = value.replace("[", "").replace("]", "").split(',')
                     nb_play = len(value)
