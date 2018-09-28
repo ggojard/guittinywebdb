@@ -99,13 +99,16 @@ def get_scores(user):
     average = 0.00
     if tag:
         value = TinyWebDB.query.filter_by(tag=tag).first().value.replace("[", "").replace("]", "").split(',');
-        nb_play = len(value)
-        for v in value:
-            sum_play = sum_play + int(v)
-        nb_play = len(value)
-        average = format(sum_play/nb_play, '.2f')
-        return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
-    return 'Invalid user: '+user
+        if value:
+            nb_play = len(value)
+            for v in value:
+                sum_play = sum_play + int(v)
+            nb_play = len(value)
+            average = format(sum_play/nb_play, '.2f')
+            return jsonify(['VALUE', 'nb', nb_play, 'sum', sum_play, 'average', average])
+        else:
+            return 'Invalid user: '+user
+    return 'User name missing: '
 
 @app.route('/actionable/getuseraverage', methods=['POST']) #OK
 def get_user_average():
